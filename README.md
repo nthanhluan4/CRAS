@@ -1,9 +1,12 @@
 # CRAS
 
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/center-aware-residual-anomaly-synthesis-for/multi-class-anomaly-detection-on-mvtec-ad)](https://paperswithcode.com/sota/multi-class-anomaly-detection-on-mvtec-ad?p=center-aware-residual-anomaly-synthesis-for)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/center-aware-residual-anomaly-synthesis-for/anomaly-detection-on-mpdd)](https://paperswithcode.com/sota/anomaly-detection-on-mpdd?p=center-aware-residual-anomaly-synthesis-for)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/center-aware-residual-anomaly-synthesis-for/multi-class-anomaly-detection-on-itdd)](https://paperswithcode.com/sota/multi-class-anomaly-detection-on-itdd?p=center-aware-residual-anomaly-synthesis-for)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/center-aware-residual-anomaly-synthesis-for/anomaly-detection-on-mvtec-ad)](https://paperswithcode.com/sota/anomaly-detection-on-mvtec-ad?p=center-aware-residual-anomaly-synthesis-for)
+[//]: # ([![PWC]&#40;https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/center-aware-residual-anomaly-synthesis-for/multi-class-anomaly-detection-on-mvtec-ad&#41;]&#40;https://paperswithcode.com/sota/multi-class-anomaly-detection-on-mvtec-ad?p=center-aware-residual-anomaly-synthesis-for&#41;)
+
+[//]: # ([![PWC]&#40;https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/center-aware-residual-anomaly-synthesis-for/anomaly-detection-on-mpdd&#41;]&#40;https://paperswithcode.com/sota/anomaly-detection-on-mpdd?p=center-aware-residual-anomaly-synthesis-for&#41;)
+
+[//]: # ([![PWC]&#40;https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/center-aware-residual-anomaly-synthesis-for/multi-class-anomaly-detection-on-itdd&#41;]&#40;https://paperswithcode.com/sota/multi-class-anomaly-detection-on-itdd?p=center-aware-residual-anomaly-synthesis-for&#41;)
+
+[//]: # ([![PWC]&#40;https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/center-aware-residual-anomaly-synthesis-for/anomaly-detection-on-mvtec-ad&#41;]&#40;https://paperswithcode.com/sota/anomaly-detection-on-mvtec-ad?p=center-aware-residual-anomaly-synthesis-for&#41;)
 
 ![](figures/CRAS_schematic.png)
 
