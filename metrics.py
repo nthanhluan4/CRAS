@@ -52,7 +52,7 @@ def compute_pixelwise_retrieval_metrics(anomaly_segmentations, ground_truth_mask
 
 
 def compute_pro(masks, amaps, num_th=200):
-    df = pd.DataFrame([], columns=["pro", "fpr", "threshold"])
+    rows = []
     binary_amaps = np.zeros_like(amaps, dtype=bool)
 
     min_th = amaps.min()
@@ -77,7 +77,9 @@ def compute_pro(masks, amaps, num_th=200):
         fp_pixels = np.logical_and(inverse_masks, binary_amaps).sum()
         fpr = fp_pixels / inverse_masks.sum()
 
-        df = df.append({"pro": np.mean(pros), "fpr": fpr, "threshold": th}, ignore_index=True)
+        rows.append({"pro": np.mean(pros) if len(pros) > 0 else 0.0, "fpr": fpr, "threshold": th})
+
+    df = pd.DataFrame(rows, columns=["pro", "fpr", "threshold"])
 
     # Normalize FPR from 0 ~ 1 to 0 ~ 0.3
     df = df[df["fpr"] < 0.3]

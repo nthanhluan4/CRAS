@@ -170,7 +170,7 @@ class CRAS(torch.nn.Module):
     def trainer(self, train_data, train_datas, test_datas, class_names, setting):
         state_dict = {}
         self.class_names = class_names
-        ckpt_path = glob.glob(self.ckpt_dir + '/ckpt_best*')
+        ckpt_path = glob.glob(os.path.join(self.ckpt_dir, 'ckpt_best*'))
         ckpt_path_save = os.path.join(self.ckpt_dir, "ckpt.pth")
         if len(ckpt_path) != 0:
             LOGGER.info("Start testing, ckpt file found!")
@@ -258,7 +258,7 @@ class CRAS(torch.nn.Module):
                                     "best_epoch": i_epoch,
                                 }
                             )
-                        mean_metrics = utils.create_csv(result_collect, self.ckpt_dir.split('/')[0])
+                        mean_metrics = utils.create_csv(result_collect, self.ckpt_dir.replace('\\', '/').split('/')[0])
 
                 pbar_str1 = f" IAUC:{round(image_mauroc * 100, 2)}({round(best_record[0] * 100, 2)})" \
                             f" PAUC:{round(pixel_mauroc * 100, 2)}({round(best_record[1] * 100, 2)})" \
@@ -298,7 +298,7 @@ class CRAS(torch.nn.Module):
 
             # 2.Center Search
             count_patch = true_feats.shape[0] // img.shape[0]
-            class_index = torch.tensor([self.class_names.index(path.split(os.sep)[-4]) for path in data_item["image_path"]])
+            class_index = torch.tensor([self.class_names.index(os.path.normpath(path).split(os.sep)[-4]) for path in data_item["image_path"]])
             center_bank = self.c2[class_index]
 
             center_feats = torch.zeros_like(true_feats)
@@ -370,7 +370,7 @@ class CRAS(torch.nn.Module):
         return pbar_str2
 
     def tester(self, test_data, class_names):
-        ckpt_path = glob.glob(self.ckpt_dir + '/ckpt_best*')
+        ckpt_path = glob.glob(os.path.join(self.ckpt_dir, 'ckpt_best*'))
         self.class_names = class_names
         if len(ckpt_path) != 0:
             state_dict = torch.load(ckpt_path[0], map_location=self.device)
@@ -382,7 +382,7 @@ class CRAS(torch.nn.Module):
                 self.load_state_dict(state_dict, strict=False)
 
             try:
-                self.c2 = torch.load(self.ckpt_dir + '/center.pth', map_location=self.device)
+                self.c2 = torch.load(os.path.join(self.ckpt_dir, 'center.pth'), map_location=self.device)
             except:
                 LOGGER.info("No center file found!")
                 return 0., 0., 0., 0., 0., -1.

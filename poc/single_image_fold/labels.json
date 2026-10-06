@@ -1,0 +1,64 @@
+{
+  "_comment": "DRAFT fold labels drawn by Claude on contrast-enhanced views - MUST be confirmed/corrected by a fabric inspector. Coordinates: original 2048x2448 pixels. 'required' folds must be found (recall); 'optional' = uncertain, neither missed nor false alarm; 'ignore' boxes [x0,y0,x1,y1] are excluded (backdrop strip, chalk marks).",
+  "image_dir": "d:/Luan.Nguyen/Tools/fabric_defect/test",
+  "images": {
+    "export_20260923_154200_raw.png": {
+      "required": [
+        {"name": "H1 ngang (chu T)", "polyline": [[20, 638], [1000, 640]]},
+        {"name": "V1 doc (chu T)", "polyline": [[1000, 660], [1000, 2430]]}
+      ],
+      "optional": [
+        {"name": "vet sang tren", "polyline": [[600, 160], [1330, 160]]},
+        {"name": "doc mo x410", "polyline": [[410, 670], [410, 1070]]},
+        {"name": "doc mo x600", "polyline": [[600, 670], [600, 1070]]},
+        {"name": "dai toi mep trai", "polyline": [[110, 1300], [140, 2440]]}
+      ],
+      "ignore": []
+    },
+    "export_20260923_154231_raw.png": {
+      "required": [
+        {"name": "H1 ngang", "polyline": [[200, 570], [1420, 570]]},
+        {"name": "V1 doc x1440", "polyline": [[1440, 590], [1450, 2440]]},
+        {"name": "V2 doc mo x850", "polyline": [[853, 620], [853, 1300]]},
+        {"name": "D1 dai cheo", "polyline": [[540, 1600], [630, 2440]]},
+        {"name": "D2 cheo trai", "polyline": [[230, 1600], [520, 2400]]}
+      ],
+      "optional": [
+        {"name": "nep cong tren trai", "polyline": [[210, 300], [500, 200], [800, 110]]},
+        {"name": "doc ngan x1050 day", "polyline": [[1050, 2130], [1050, 2440]]},
+        {"name": "doc ngan x820", "polyline": [[820, 620], [820, 800]]}
+      ],
+      "ignore": [[0, 0, 130, 2448]]
+    },
+    "export_20260923_154250_raw.png": {
+      "required": [
+        {"name": "H1 ngang", "polyline": [[200, 570], [1420, 570]]},
+        {"name": "V1 doc x1440", "polyline": [[1440, 590], [1450, 2440]]},
+        {"name": "V2 doc mo x850", "polyline": [[853, 620], [853, 1300]]},
+        {"name": "D1 dai cheo", "polyline": [[540, 1600], [630, 2440]]},
+        {"name": "D2 cheo trai", "polyline": [[230, 1600], [520, 2400]]}
+      ],
+      "optional": [
+        {"name": "nep cong tren trai", "polyline": [[210, 300], [500, 200], [800, 110]]},
+        {"name": "doc ngan x1050 day", "polyline": [[1050, 2130], [1050, 2440]]},
+        {"name": "doc ngan x820", "polyline": [[820, 620], [820, 800]]},
+        {"name": "cham do (khong phai nep)", "polyline": [[1240, 1450], [1250, 1460]]}
+      ],
+      "ignore": [[0, 0, 130, 2448]]
+    },
+    "export_20260923_154325_raw.png": {
+      "required": [
+        {"name": "V1 doc x707", "polyline": [[700, 800], [720, 1650]]},
+        {"name": "V3 doc x1160", "polyline": [[1150, 1390], [1170, 1975]]},
+        {"name": "H1 ngang duoi phai", "polyline": [[1200, 1955], [1970, 1950]]}
+      ],
+      "optional": [
+        {"name": "V2 doc ngan x920", "polyline": [[933, 880], [907, 1200]]},
+        {"name": "V3 keo dai len", "polyline": [[1147, 250], [1150, 1390]]},
+        {"name": "nep cong trai", "polyline": [[350, 1390], [480, 1300], [610, 1250]]},
+        {"name": "ngang mo duoi trai", "polyline": [[150, 1970], [1150, 1960]]}
+      ],
+      "ignore": [[0, 0, 2048, 260], [0, 0, 70, 2448]]
+    }
+  }
+}

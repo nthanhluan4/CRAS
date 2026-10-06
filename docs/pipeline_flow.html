@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sơ Đồ Luồng Xử Lý Hệ Thống Kiểm Định Vải AOI + Gemini VLM</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    .step-active {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.12);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+    }
+    .badge-code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+  </style>
+</head>
+<body class="bg-transparent text-[var(--foreground)] antialiased p-3 sm:p-5">
+  <div class="max-w-5xl mx-auto bg-[var(--card)] text-[var(--foreground)] border border-[var(--border)] rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+    
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-5 border-b border-[var(--border)] gap-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600/20 text-blue-500 font-bold text-lg">⚡</span>
+          <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--foreground)]">Luồng Dữ Liệu Thực Thi (End-to-End Execution Flow)</h1>
+        </div>
+        <p class="text-sm text-[var(--muted-foreground)] mt-1">Từ Camera công nghiệp &rarr; Lọc đa nhánh &rarr; Tầng 1 AOI (ASTM D5430) &rarr; Tầng 2 Gemini Flash Lite</p>
+      </div>
+
+      <!-- Test Scenario Switcher -->
+      <div class="flex items-center bg-[var(--secondary)] rounded-xl p-1 border border-[var(--border)]">
+        <button id="btn-scene-crease" onclick="switchScenario('crease')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-blue-600 text-white shadow-sm">
+          📸 Vải Đen (Nếp Gấp)
+        </button>
+        <button id="btn-scene-stain" onclick="switchScenario('stain')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-[var(--muted-foreground)] hover:text-[var(--foreground)]">
+          📸 Vải Trắng (Vết Ố)
+        </button>
+      </div>
+    </div>
+
+    <!-- Stepper Navigation -->
+    <div class="grid grid-cols-2 sm:grid-cols-6 gap-2 my-6">
+      <button onclick="goToStep(1)" id="step-btn-1" class="step-nav-btn p-3 rounded-xl border border-[var(--border)] text-left transition-all step-active">
+        <div class="text-[10px] font-bold text-blue-500 uppercase tracking-wider">BƯỚC 1</div>
+        <div class="text-xs font-semibold mt-0.5">Ảnh Camera Thô</div>
+        <div class="text-[10px] text-[var(--muted-foreground)]">2448×2048 RGB</div>
+      </button>
+
+      <button onclick="goToStep(2)" id="step-btn-2" class="step-nav-btn p-3 rounded-xl border border-[var(--border)] text-left transition-all hover:border-blue-400">
+        <div class="text-[10px] font-bold text-blue-500 uppercase tracking-wider">BƯỚC 2</div>
+        <div class="text-xs font-semibold mt-0.5">Lọc Hessian 3D</div>
+        <div class="text-[10px] text-[var(--muted-foreground)]">Đạo hàm bậc 2</div>
+      </button>
+
+      <button onclick="goToStep(3)" id="step-btn-3" class="step-nav-btn p-3 rounded-xl border border-[var(--border)] text-left transition-all hover:border-blue-400">
+        <div class="text-[10px] font-bold text-blue-500 uppercase tracking-wider">BƯỚC 3</div>
+        <div class="text-xs font-semibold mt-0.5">Sắc Độ CIE Lab</div>
+        <div class="text-[10px] text-[var(--muted-foreground)]">Phân lập kênh b*</div>
+      </button>
+
+      <button onclick="goToStep(4)" id="step-btn-4" class="step-nav-btn p-3 rounded-xl border border-[var(--border)] text-left transition-all hover:border-blue-400">
+        <div class="text-[10px] font-bold text-blue-500 uppercase tracking-wider">BƯỚC 4</div>
+        <div class="text-xs font-semibold mt-0.5">Hợp Nhất Nhiệt</div>
+        <div class="text-[10px] text-[var(--muted-foreground)]">Fusion Max & Mask</div>
+      </button>
+
+      <button onclick="goToStep(5)" id="step-btn-5" class="step-nav-btn p-3 rounded-xl border border-[var(--border)] text-left transition-all hover:border-blue-400">
+        <div class="text-[10px] font-bold text-blue-500 uppercase tracking-wider">BƯỚC 5</div>
+        <div class="text-xs font-semibold mt-0.5">Tầng 1 AOI (CCA)</div>
+        <div class="text-[10px] text-[var(--muted-foreground)]">BBox & ASTM D5430</div>
+      </button>
+
+      <button onclick="goToStep(6)" id="step-btn-6" class="step-nav-btn p-3 rounded-xl border border-[var(--border)] text-left transition-all hover:border-blue-400">
+        <div class="text-[10px] font-bold text-blue-500 uppercase tracking-wider">BƯỚC 6</div>
+        <div class="text-xs font-semibold mt-0.5">Tầng 2 Gemini VLM</div>
+        <div class="text-[10px] text-[var(--muted-foreground)]">Flash-Lite & JSON</div>
+      </button>
+    </div>
+
+    <!-- Active Step Detail Display Card -->
+    <div id="step-detail-card" class="bg-[var(--secondary)]/40 border border-[var(--border)] rounded-xl p-5 mb-5 transition-all">
+      <!-- Dynamic Content Injected By JS -->
+    </div>
+
+    <!-- Live Execution Pipeline Architecture Visualizer -->
+    <div class="border border-[var(--border)] rounded-xl p-5 bg-[var(--background)]/40">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-semibold flex items-center gap-2">
+          <span>📊</span> Bảng Thông Số Luồng Chạy Hiện Thời
+        </h3>
+        <span id="pipeline-status-badge" class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+          ● Pipeline Sẵn Sàng (Live 100%)
+        </span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+        <div class="p-3 bg-[var(--card)] rounded-lg border border-[var(--border)]">
+          <div class="text-[var(--muted-foreground)]">Độ trễ Tầng 1 AOI</div>
+          <div class="text-base font-bold text-emerald-400 mt-1">~38 ms</div>
+          <div class="text-[10px] text-[var(--muted-foreground)]">Xử lý cục bộ (CPU)</div>
+        </div>
+
+        <div class="p-3 bg-[var(--card)] rounded-lg border border-[var(--border)]">
+          <div class="text-[var(--muted-foreground)]">Độ trễ Tầng 2 Gemini</div>
+          <div class="text-base font-bold text-blue-400 mt-1">~1.2 s</div>
+          <div class="text-[10px] text-[var(--muted-foreground)]">Gemini 2.0 Flash Lite</div>
+        </div>
+
+        <div class="p-3 bg-[var(--card)] rounded-lg border border-[var(--border)]">
+          <div class="text-[var(--muted-foreground)]">Tiêu chuẩn kiểm định</div>
+          <div class="text-base font-bold text-purple-400 mt-1">ASTM D5430</div>
+          <div class="text-[10px] text-[var(--muted-foreground)]">4-Point Inspection System</div>
+        </div>
+
+        <div class="p-3 bg-[var(--card)] rounded-lg border border-[var(--border)]">
+          <div class="text-[var(--muted-foreground)]">Giao thức kết nối VLM</div>
+          <div class="text-base font-bold text-amber-400 mt-1">REST + Base64</div>
+          <div class="text-[10px] text-[var(--muted-foreground)]">Strict JSON Schema</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentScenario = 'crease';
+    let currentStep = 1;
+
+    const stepData = {
+      crease: {
+        1: {
+          title: "BƯỚC 1: Tiếp Nhận Khung Hình Từ Camera Công Nghiệp (Raw Capture)",
+          algorithm: "CMOS Sensor Image Acquisition & Auto-Crop Preprocessing",
+          input: "Cảm biến công nghiệp 5.0 MP (2448 × 2048 pixel), RGB 24-bit.",
+          process: "Hệ thống đọc ma trận điểm ảnh thô (ảnh vải đen export_20260923_154200_raw.png). Độ xám trung bình chỉ đạt 46.0/255 (rất tối và thiếu sáng).",
+          output: "Ảnh RGB chuẩn hóa (2448×2048) đưa đồng thời vào 3 nhánh phân tích.",
+          metrics: { "Mean Gray": "46.0 / 255", "FOV Width": "~500 mm", "Aspect": "1.19" },
+          code: "img = Image.open('export_20260923_154200_raw.png').convert('RGB')\nraw_rgb = np.array(img)  # Shape: (2048, 2448, 3)"
+        },
+        2: {
+          title: "BƯỚC 2: Phân Nhánh Lọc Hình Học 3D (Hessian 2nd Derivative Ridge Filter)",
+          algorithm: "Multi-scale CLAHE + Hessian Ridge Detection + Directional Morphology",
+          input: "Ảnh xám từ Bước 1.",
+          process: "1. Tăng tương phản cục bộ qua CLAHE (clipLimit=3.0).\n2. Tính đạo hàm bậc 2 d²I/dx² và d²I/dy² qua bộ lọc Sobel (ksize=5) để bắt rãnh lõm do nếp gấp đổ bóng.\n3. Áp dụng kernel định hướng (1×41 dọc và 41×1 ngang) để liên kết vết gập liên tục và triệt tiêu nhiễu dệt.",
+          output: "Bản đồ nhiệt Nếp Gấp (Crease Heatmap). Điểm phát hiện nếp gấp: 0.2671.",
+          metrics: { "Crease Score": "0.2671", "Directional Kernel": "1×41 px", "Ridge Intensity": "Peak Red" },
+          code: "d2x = cv2.Sobel(smooth, cv2.CV_32F, 2, 0, ksize=5)\ncrease_v_conn = cv2.morphologyEx(np.clip(d2x, 0, None), cv2.MORPH_CLOSE, (1, 41))"
+        },
+        3: {
+          title: "BƯỚC 3: Phân Nhánh Lọc Sắc Độ Màu (CIE Lab Chromaticity Shift)",
+          algorithm: "CIE L*a*b* Color Decoupling & Delta b* Extraction",
+          input: "Ảnh RGB từ Bước 1.",
+          process: "Chuyển ảnh sang không gian màu CIE Lab. Phân lập kênh b* (trục vàng/xanh lam) để tìm vết ố mà không bị ảnh hưởng bởi độ sáng L*.\nVì vải đen có b* ≈ 128 (đơn sắc, không có đốm vàng), nhánh này cho điểm ố thấp.",
+          output: "Bản đồ nhiệt Vết Ố (Stain Heatmap). Điểm phát hiện: 0.5667 (dưới ngưỡng báo động đơn lẻ).",
+          metrics: { "Stain Score": "0.5667", "Lab Channel": "b* (Yellow/Blue)", "Color Shift": "Bình thường" },
+          code: "lab = cv2.cvtColor(np_img, cv2.COLOR_RGB2LAB)\nL, A, B = cv2.split(lab)\nb_diff = (cv2.medianBlur(B, 5).astype(float) - np.median(B)).clip(min=0)"
+        },
+        4: {
+          title: "BƯỚC 4: Hợp Nhất Bản Đồ Nhiệt & Mặt Nạ Nhị Phân (Fusion Layer)",
+          algorithm: "Max-Projection Heatmap Fusion & Adaptive Percentile Thresholding",
+          input: "Bản đồ Crease (Bước 2) + Bản đồ Stain (Bước 3).",
+          process: "Hợp nhất bằng toán tử cực đại: Heatmap_fused = max(HM_crease, HM_stain). Áp dụng ngưỡng phân vị thích ứng (P93) để tạo mặt nạ nhị phân phân tách rõ vùng lỗi và nền vải sạch.",
+          output: "Bản đồ nhiệt tổng hợp đa sắc (Jet colormap) và Binary Defect Mask.",
+          metrics: { "Ensemble Score": "0.6678 (Lỗi > 0.40)", "Threshold": "P93 (~50/255)", "Binary Blobs": "Active" },
+          code: "fused_u8 = np.maximum(crease_u8, stain_u8)\n_, binary_mask = cv2.threshold(fused_u8, max(p93, 50), 255, cv2.THRESH_BINARY)"
+        },
+        5: {
+          title: "BƯỚC 5: Tầng 1 AOI — Trích Xuất Bounding Box & Tính Điểm ASTM D5430",
+          algorithm: "Connected Component Analysis (CCA) + Morphological Invariants + ASTM 4-Point",
+          input: "Binary Mask từ Bước 4 + Ảnh gốc.",
+          process: "1. Gán nhãn đồ thị liên thông bóc tách từng thực thể lỗi riêng biệt.\n2. Đo Bounding Box [X, Y, W, H], chiều dài L, diện tích A, tỷ số L/W.\n   -> DEF-16 có L = 1557 px, L/W = 8.42 => Phân loại là 'Nếp gấp dọc'.\n3. Chấm điểm phạt ASTM D5430 (chiều dài > 9 inch => 4 điểm phạt/lỗi).",
+          output: "Danh sách khuyết tật có cấu trúc + Ảnh đóng khung Bounding Box chữ nhật nhãn cam.",
+          metrics: { "Tổng lỗi": "36 lỗi", "Điểm phạt ASTM": "70 pts", "Xếp hạng": "HẠNG C / REJECT" },
+          code: "num, labels, stats, centroids = cv2.connectedComponentsWithStats(binary_mask)\n# Tính ASTM: L > 225px => 4 điểm phạt"
+        },
+        6: {
+          title: "BƯỚC 6: Tầng 2 Cognitive VLM — Gemini Flash Lite Phân Tích & Báo Cáo",
+          algorithm: "Multimodal Gemini API Call (REST JSON Schema) & Root-Cause Reasoning",
+          input: "Ảnh nén Base64 JPEG (1024px) + Danh sách Bounding Box từ Bước 5.",
+          process: "Gửi gói tin HTTP POST đến endpoint Google Gemini (gemini-2.0-flash-lite). AI Gemini đọc ảnh và trả về JSON chẩn đoán nguyên nhân kỹ thuật gốc rễ của nếp gấp dọc.",
+          output: "Báo cáo QA/QC hoàn chỉnh (JSON + Markdown), khuyến nghị căn chỉnh rulo ép số 2 và giảm lực căng cuộn.",
+          metrics: { "Engine": "Gemini 2.0 Flash Lite", "Thời gian phản hồi": "~1.1 giây", "Độ tin cậy": "96%" },
+          code: "endpoint = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key={API_KEY}'\nresp = requests.post(endpoint, json=payload, headers={'Content-Type': 'application/json'})"
+        }
+      },
+      stain: {
+        1: {
+          title: "BƯỚC 1: Tiếp Nhận Khung Hình Vải Trắng Dính Vết Ố (Raw Capture)",
+          algorithm: "CMOS Sensor Image Acquisition & Auto-Crop Preprocessing",
+          input: "Ảnh vải trắng dính đốm ố vàng export_20260923_154829_raw.png (2448 × 2048 pixel).",
+          process: "Độ xám trung bình 115.2/255 (sáng rõ). Ở góc trên bên phải có một đốm ố màu vàng xỉn loang rộng.",
+          output: "Ảnh RGB chuẩn hóa đưa vào các nhánh lọc.",
+          metrics: { "Mean Gray": "115.2 / 255", "FOV Width": "~500 mm", "Defect Visibility": "Ố vàng mắt thường" },
+          code: "img = Image.open('export_20260923_154829_raw.png').convert('RGB')"
+        },
+        2: {
+          title: "BƯỚC 2: Phân Nhánh Lọc Hình Học 3D (Hessian 2nd Derivative)",
+          algorithm: "Multi-scale CLAHE + Hessian Ridge Detection",
+          input: "Ảnh xám từ Bước 1.",
+          process: "Vết ố không có đường gờ cơ học sắc nhọn như nếp gấp, nên đạo hàm bậc 2 chỉ bắt được viền mép nhăn nhẹ xung quanh.",
+          output: "Bản đồ Crease ghi nhận điểm thấp tại vùng đốm phẳng.",
+          metrics: { "Crease Score": "0.5927 (Viền mép)", "Ridge Type": "Diffuse" },
+          code: "crease_v = np.clip(d2x, 0, None)"
+        },
+        3: {
+          title: "BƯỚC 3: Phân Nhánh Lọc Sắc Độ Màu (CIE Lab Chromaticity Shift) — ĐỘT PHÁ",
+          algorithm: "CIE L*a*b* Color Decoupling & Delta b* Extraction",
+          input: "Ảnh RGB từ Bước 1.",
+          process: "Kênh b* ghi nhận độ lệch sắc độ vàng cực mạnh (Delta b* = +36.8 so với trung vị vải trắng). Điểm ố bùng nổ vượt ngưỡng tối đa.",
+          output: "Bản đồ nhiệt Vết Ố (Stain Heatmap) đỏ rực ngay tâm vết bẩn. Điểm Stain: 1.3000.",
+          metrics: { "Stain Score": "1.3000 (Cực đại)", "Delta b*": "+36.8 (Ố vàng)", "Khu vực": "Khoanh vùng chính xác" },
+          code: "delta_b = float(np.mean(roi_b) - b_median)  # delta_b > 12.0 => Phân loại Stain"
+        },
+        4: {
+          title: "BƯỚC 4: Hợp Nhất Bản Đồ Nhiệt & Mặt Nạ Nhị Phân (Fusion Layer)",
+          algorithm: "Max-Projection Heatmap Fusion & Adaptive Percentile Thresholding",
+          input: "Bản đồ Crease + Bản đồ Stain từ Bước 3.",
+          process: "Bản đồ nhiệt tổng hợp lấy cực đại theo vết ố b*. Mặt nạ nhị phân cô lập hoàn hảo đốm ố tròn/oval.",
+          output: "Mặt nạ nhị phân đốm ố diện tích 201,238 px².",
+          metrics: { "Ensemble Score": "1.0000 (100% Lỗi)", "Mask Area": "201,238 px²" },
+          code: "fused_u8 = np.maximum(crease_u8, stain_u8)"
+        },
+        5: {
+          title: "BƯỚC 5: Tầng 1 AOI — Trích Xuất Bounding Box & Tính Điểm ASTM D5430",
+          algorithm: "Connected Component Analysis (CCA) + Morphological Invariants + ASTM 4-Point",
+          input: "Binary Mask từ Bước 4.",
+          process: "Bóc tách được đốm ố chính DEF-03 (chiều dài 2047 px, diện tích lớn). Tỉ số L/W < 3.0 và Delta b* cao => Phân loại chính xác là 'Vết ố / Dầu mỡ (Stain)'. Chấm 4 điểm phạt.",
+          output: "Bounding Box màu vàng bọc lấy vết ố kèm nhãn: DEF-03: Stain | 4pts.",
+          metrics: { "Loại lỗi": "Stain (Vết ố)", "ASTM Points": "4 pts (Nghiêm trọng)", "Phân hạng": "REJECT" },
+          code: "d['category'] = 'Stain' if delta_b > 12.0 else 'Crease'"
+        },
+        6: {
+          title: "BƯỚC 6: Tầng 2 Cognitive VLM — Gemini Flash Lite Phân Tích & Báo Cáo",
+          algorithm: "Multimodal Gemini API Call & Root-Cause Reasoning",
+          input: "Ảnh crop vết ố + Thông số màu Lab gửi lên Gemini.",
+          process: "Gemini xác nhận đốm ố do dầu bôi trơn máy dệt hoặc hóa chất định hình nhiệt rò rỉ. Đề xuất kiểm tra phớt chắn dầu hộp số và xử lý giặt tẩy điểm.",
+          output: "Báo cáo QA/QC phân hạng HẠNG C / REJECT, đề xuất hành động bảo dưỡng cụ thể.",
+          metrics: { "Engine": "Gemini 2.0 Flash Lite", "Chẩn đoán": "Dầu bôi trơn máy dệt", "Xử lý": "Spot Cleaning" },
+          code: "vlm_report = call_gemini_vlm(pil_image, defects, stats, api_key)"
+        }
+      }
+    };
+
+    function renderStep() {
+      const data = stepData[currentScenario][currentStep];
+      const card = document.getElementById('step-detail-card');
+
+      card.innerHTML = `
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 border-b border-[var(--border)]">
+          <div>
+            <span class="inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-blue-600/20 text-blue-400 border border-blue-500/30 uppercase tracking-wider mb-1">
+              CHI TIẾT BƯỚC ${currentStep} / 6
+            </span>
+            <h2 class="text-base sm:text-lg font-bold text-[var(--foreground)]">${data.title}</h2>
+            <div class="text-xs text-blue-400 font-mono mt-0.5">Thuật toán: ${data.algorithm}</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="prevStep()" class="p-2 rounded-lg bg-[var(--card)] border border-[var(--border)] hover:bg-[var(--secondary)] text-xs font-semibold ${currentStep === 1 ? 'opacity-40 cursor-not-allowed' : ''}">◀ Trước</button>
+            <span class="text-xs font-mono text-[var(--muted-foreground)]">${currentStep}/6</span>
+            <button onclick="nextStep()" class="p-2 rounded-lg bg-[var(--card)] border border-[var(--border)] hover:bg-[var(--secondary)] text-xs font-semibold ${currentStep === 6 ? 'opacity-40 cursor-not-allowed' : ''}">Tiếp ▶</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-xs">
+          <!-- Left Column: I/O & Operation -->
+          <div class="space-y-3">
+            <div>
+              <div class="font-semibold text-emerald-400 flex items-center gap-1.5">
+                <span>📥</span> Đầu vào dữ liệu (Input)
+              </div>
+              <p class="text-[var(--muted-foreground)] mt-1 pl-5 border-l border-emerald-500/30">${data.input}</p>
+            </div>
+
+            <div>
+              <div class="font-semibold text-blue-400 flex items-center gap-1.5">
+                <span>⚙️</span> Cơ chế tính toán (Mechanism)
+              </div>
+              <p class="text-[var(--muted-foreground)] mt-1 pl-5 border-l border-blue-500/30 whitespace-pre-line">${data.process}</p>
+            </div>
+
+            <div>
+              <div class="font-semibold text-purple-400 flex items-center gap-1.5">
+                <span>📤</span> Kết quả đầu ra (Output)
+              </div>
+              <p class="text-[var(--muted-foreground)] mt-1 pl-5 border-l border-purple-500/30">${data.output}</p>
+            </div>
+          </div>
+
+          <!-- Right Column: Code & Live Metrics -->
+          <div class="space-y-3">
+            <div>
+              <div class="font-semibold text-[var(--foreground)] flex items-center justify-between">
+                <span>📈 Chỉ Số Tính Toán Thực Tế</span>
+                <span class="text-[10px] text-[var(--muted-foreground)] font-mono">Real Benchmark</span>
+              </div>
+              <div class="grid grid-cols-3 gap-2 mt-2">
+                ${Object.entries(data.metrics).map(([k, v]) => `
+                  <div class="p-2 rounded-lg bg-[var(--card)] border border-[var(--border)] text-center">
+                    <div class="text-[10px] text-[var(--muted-foreground)] truncate">${k}</div>
+                    <div class="text-xs font-bold text-blue-400 mt-0.5 truncate">${v}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div>
+              <div class="font-semibold text-[var(--foreground)] mb-1 flex items-center justify-between">
+                <span>💻 Mã Lệnh Xử Lý (Core Snippet)</span>
+                <span class="text-[10px] text-[var(--muted-foreground)] font-mono">Python / OpenCV</span>
+              </div>
+              <pre class="p-3 rounded-lg bg-black/60 text-emerald-300 font-mono text-[11px] overflow-x-auto border border-[var(--border)] leading-relaxed">${data.code}</pre>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Update button active styles
+      document.querySelectorAll('.step-nav-btn').forEach((btn, idx) => {
+        if (idx + 1 === currentStep) {
+          btn.classList.add('step-active');
+        } else {
+          btn.classList.remove('step-active');
+        }
+      });
+    }
+
+    function goToStep(step) {
+      currentStep = step;
+      renderStep();
+    }
+
+    function nextStep() {
+      if (currentStep < 6) {
+        currentStep++;
+        renderStep();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        currentStep--;
+        renderStep();
+      }
+    }
+
+    function switchScenario(scenario) {
+      currentScenario = scenario;
+      const btnCrease = document.getElementById('btn-scene-crease');
+      const btnStain = document.getElementById('btn-scene-stain');
+
+      if (scenario === 'crease') {
+        btnCrease.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-blue-600 text-white shadow-sm';
+        btnStain.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-[var(--muted-foreground)] hover:text-[var(--foreground)]';
+      } else {
+        btnStain.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-amber-600 text-white shadow-sm';
+        btnCrease.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-[var(--muted-foreground)] hover:text-[var(--foreground)]';
+      }
+      renderStep();
+    }
+
+    // Initial render
+    renderStep();
+  </script>
+</body>
+</html>

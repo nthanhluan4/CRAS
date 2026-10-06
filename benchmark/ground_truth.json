@@ -1,0 +1,92 @@
+{
+  "_comment": [
+    "Regression ground truth for the AOI pipeline. DRAFT drawn by Claude from contrast-enhanced views (see benchmark/label_review/): must be confirmed / corrected by a fabric inspector.",
+    "Coordinates in original image pixels (2048 x 2448).",
+    "type: fold | stain | mark (chalk / foreign white mark) | spot. 'accept' = pipeline categories that count as a CORRECT classification.",
+    "required=true: must be found (recall + regression gate). required=false: uncertain -> neither a miss nor a false alarm.",
+    "ignore boxes [x0, y0, x1, y1]: outside the inspected fabric (backdrop, table) or excluded by design (selvedge margin).",
+    "scope: 'roll' = representative of roll inspection; 'cut_panel' = cut garment panel (chalk pattern lines are intentional) -> reported separately, not in the main score."
+  ],
+  "image_dir": "d:/Luan.Nguyen/Tools/fabric_defect/test",
+  "images": {
+    "export_20260923_154200_raw.png": {
+      "scope": "roll",
+      "defects": [
+        {"id": "154200-F1", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[20, 638], [1000, 640]], "note": "nep ngang chu T"},
+        {"id": "154200-F2", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[1000, 660], [1000, 2430]], "note": "nep doc chu T"},
+        {"id": "154200-o1", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[600, 160], [1330, 160]], "note": "vet sang tren"},
+        {"id": "154200-o2", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[410, 670], [410, 1070]]},
+        {"id": "154200-o3", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[600, 670], [600, 1070]]},
+        {"id": "154200-o4", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[110, 1300], [140, 2440]]}
+      ],
+      "ignore": []
+    },
+    "export_20260923_154231_raw.png": {
+      "scope": "roll",
+      "defects": [
+        {"id": "154231-F1", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[200, 570], [1420, 570]]},
+        {"id": "154231-F2", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[1440, 590], [1450, 2440]]},
+        {"id": "154231-F3", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[853, 620], [853, 1300]], "note": "nep doc mo"},
+        {"id": "154231-F4", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[540, 1600], [630, 2440]], "note": "dai cheo rong"},
+        {"id": "154231-F5", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[230, 1600], [520, 2400]], "note": "cheo trai"},
+        {"id": "154231-o1", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[210, 300], [500, 200], [800, 110]]},
+        {"id": "154231-o2", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[1050, 2130], [1050, 2440]]},
+        {"id": "154231-o3", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[820, 620], [820, 800]]}
+      ],
+      "ignore": [[0, 0, 130, 2448]]
+    },
+    "export_20260923_154250_raw.png": {
+      "scope": "roll",
+      "defects": [
+        {"id": "154250-F1", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[200, 570], [1420, 570]]},
+        {"id": "154250-F2", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[1440, 590], [1450, 2440]]},
+        {"id": "154250-F3", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[853, 620], [853, 1300]]},
+        {"id": "154250-F4", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[540, 1600], [630, 2440]]},
+        {"id": "154250-F5", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[230, 1600], [520, 2400]]},
+        {"id": "154250-S1", "type": "spot", "required": true, "accept": ["Stain", "Weave"], "bbox": [1215, 1440, 45, 45], "note": "cham do"},
+        {"id": "154250-o1", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[210, 300], [500, 200], [800, 110]]},
+        {"id": "154250-o2", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[1050, 2130], [1050, 2440]]},
+        {"id": "154250-o3", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[820, 620], [820, 800]]}
+      ],
+      "ignore": [[0, 0, 130, 2448]]
+    },
+    "export_20260923_154325_raw.png": {
+      "scope": "roll",
+      "defects": [
+        {"id": "154325-F1", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[700, 800], [720, 1650]]},
+        {"id": "154325-F2", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[1150, 1390], [1170, 1975]]},
+        {"id": "154325-F3", "type": "fold", "required": true, "accept": ["Crease"], "polyline": [[1200, 1955], [1970, 1950]]},
+        {"id": "154325-M1", "type": "mark", "required": true, "accept": ["ChalkMark"], "polyline": [[150, 205], [1000, 195]], "note": "vach phan tren trai"},
+        {"id": "154325-M2", "type": "mark", "required": true, "accept": ["ChalkMark"], "polyline": [[1230, 190], [2040, 170]], "note": "vach phan tren phai"},
+        {"id": "154325-o1", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[933, 880], [907, 1200]]},
+        {"id": "154325-o2", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[1147, 250], [1150, 1390]]},
+        {"id": "154325-o3", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[350, 1390], [480, 1300], [610, 1250]]},
+        {"id": "154325-o4", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[150, 1970], [1150, 1960]]}
+      ],
+      "ignore": [[0, 0, 110, 2448], [0, 0, 2048, 120]]
+    },
+    "export_20260923_154829_raw.png": {
+      "scope": "roll",
+      "defects": [
+        {"id": "154829-S1", "type": "stain", "required": true, "accept": ["Stain"], "bbox": [1390, 871, 190, 183], "note": "vet o vang lon"},
+        {"id": "154829-M1", "type": "mark", "required": true, "accept": ["ChalkMark", "Weave"], "bbox": [690, 1080, 115, 40], "note": "vet trang ngan"},
+        {"id": "154829-o1", "type": "stain", "required": false, "accept": ["Stain"], "bbox": [1175, 655, 25, 35], "note": "cham vang nho"},
+        {"id": "154829-o2", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[761, 786], [956, 786]]},
+        {"id": "154829-o3", "type": "fold", "required": false, "accept": ["Crease"], "polyline": [[1266, 444], [1593, 444]]},
+        {"id": "154829-o4", "type": "spot", "required": false, "accept": ["Weave", "Stain"], "bbox": [1135, 1015, 60, 55]},
+        {"id": "154829-o5", "type": "spot", "required": false, "accept": ["Weave", "Stain", "ChalkMark"], "bbox": [925, 1775, 95, 50]},
+        {"id": "154829-o6", "type": "mark", "required": false, "accept": ["ChalkMark", "Weave"], "bbox": [640, 1020, 200, 140]}
+      ],
+      "ignore": [[0, 0, 2048, 470], [0, 2340, 2048, 2448], [0, 0, 180, 2448], [1730, 0, 2048, 2448]]
+    },
+    "export_20260923_155041_raw.png": {
+      "scope": "cut_panel",
+      "defects": [
+        {"id": "155041-o1", "type": "mark", "required": false, "accept": ["ChalkMark"], "polyline": [[480, 30], [440, 520], [300, 780], [330, 2440]], "note": "duong phan rap (co y)"},
+        {"id": "155041-o2", "type": "mark", "required": false, "accept": ["ChalkMark"], "polyline": [[1600, 30], [1720, 470], [1720, 2440]], "note": "duong phan rap (co y)"},
+        {"id": "155041-o3", "type": "spot", "required": false, "accept": ["Weave"], "bbox": [1490, 495, 180, 235], "note": "logo in"}
+      ],
+      "ignore": [[0, 0, 150, 2448], [1880, 0, 2048, 2448]]
+    }
+  }
+}

@@ -22,8 +22,10 @@ def set_torch_device(gpu_ids):
     Args:
         gpu_ids: [list] list of gpu ids. If empty, cpu is used.
     """
-    if len(gpu_ids):
+    if len(gpu_ids) and torch.cuda.is_available():
         return torch.device("cuda:{}".format(gpu_ids[0]))
+    if len(gpu_ids) and not torch.cuda.is_available():
+        print("Warning: CUDA is not available. Using CPU instead.")
     return torch.device("cpu")
 
 
@@ -39,7 +41,7 @@ def fix_seeds(seed, with_torch=True, with_cuda=True):
     np.random.seed(seed)
     if with_torch:
         torch.manual_seed(seed)
-    if with_cuda:
+    if with_cuda and torch.cuda.is_available():
         torch.cuda.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)
         torch.backends.cudnn.deterministic = True

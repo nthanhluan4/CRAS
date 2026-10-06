@@ -1,0 +1,2206 @@
+{
+ "tag": "revert_check",
+ "created": "2026-09-26T10:33:44",
+ "config": {
+  "px_per_inch": 100.0,
+  "min_area": 150,
+  "aspect_ratio": 2.8,
+  "roi_left_px": 0,
+  "roi_right_px": 0,
+  "selvedge_margin_in": 1.0,
+  "frame_overlap_in": 0.0,
+  "usable_width_in": 0.0,
+  "grade_a_limit": 20.0,
+  "acceptance_limit": 40.0,
+  "backlight_available": false
+ },
+ "modes": {
+  "ensemble": 0.4,
+  "crease": 0.18,
+  "stain": 0.45
+ },
+ "summary": {
+  "ensemble": {
+   "required": 20,
+   "found": 12,
+   "correct": 10,
+   "false_alarms": 2,
+   "fail_stages": {
+    "S1 map": 6,
+    "ok": 10,
+    "S2 extraction": 2,
+    "S3 class": 2
+   },
+   "by_type": {
+    "fold": [
+     7,
+     7,
+     15
+    ],
+    "spot": [
+     1,
+     1,
+     1
+    ],
+    "mark": [
+     3,
+     1,
+     3
+    ],
+    "stain": [
+     1,
+     1,
+     1
+    ]
+   }
+  },
+  "crease": {
+   "required": 20,
+   "found": 12,
+   "correct": 9,
+   "false_alarms": 4,
+   "fail_stages": {
+    "S2 extraction": 3,
+    "ok": 9,
+    "S1 map": 5,
+    "S3 class": 3
+   },
+   "by_type": {
+    "fold": [
+     7,
+     7,
+     15
+    ],
+    "spot": [
+     1,
+     1,
+     1
+    ],
+    "mark": [
+     3,
+     1,
+     3
+    ],
+    "stain": [
+     1,
+     0,
+     1
+    ]
+   }
+  },
+  "stain": {
+   "required": 20,
+   "found": 5,
+   "correct": 5,
+   "false_alarms": 0,
+   "fail_stages": {
+    "S1 map": 15,
+    "ok": 5
+   },
+   "by_type": {
+    "fold": [
+     0,
+     0,
+     15
+    ],
+    "spot": [
+     1,
+     1,
+     1
+    ],
+    "mark": [
+     3,
+     3,
+     3
+    ],
+    "stain": [
+     1,
+     1,
+     1
+    ]
+   }
+  }
+ },
+ "results": {
+  "export_20260923_154200_raw.png": {
+   "scope": "roll",
+   "modes": {
+    "ensemble": {
+     "gt": [
+      {
+       "id": "154200-F1",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.34,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.028,
+        "crease": 0.304,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154200-F2",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.113,
+        "crease": 1.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154200-o1",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.027,
+        "crease": 0.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154200-o2",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.123,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.039,
+        "crease": 0.052,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154200-o3",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.033,
+        "crease": 0.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154200-o4",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.003,
+        "crease": 0.0,
+        "contrast": 0.0
+       }
+      }
+     ],
+     "false_alarms": [
+      {
+       "category": "Weave",
+       "bbox": [
+        1505,
+        1483,
+        28,
+        26
+       ],
+       "length_in": 0.27,
+       "points": 1,
+       "source": "chromatic"
+      }
+     ],
+     "sprawl_share": 0.171,
+     "n_defects": 4,
+     "astm_points_raw": 8,
+     "map_background_p999": {
+      "chromatic": 0.345,
+      "crease": 0.802,
+      "contrast": 0.0
+     }
+    },
+    "crease": {
+     "gt": [
+      {
+       "id": "154200-F1",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.482,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S2 extraction",
+       "map_peak": {
+        "crease": 0.304
+       }
+      },
+      {
+       "id": "154200-F2",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 1.0
+       }
+      },
+      {
+       "id": "154200-o1",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.0
+       }
+      },
+      {
+       "id": "154200-o2",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.136,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.052
+       }
+      },
+      {
+       "id": "154200-o3",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.037,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.0
+       }
+      },
+      {
+       "id": "154200-o4",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.0
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.186,
+     "n_defects": 2,
+     "astm_points_raw": 6,
+     "map_background_p999": {
+      "crease": 0.802
+     }
+    },
+    "stain": {
+     "gt": [
+      {
+       "id": "154200-F1",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.028
+       }
+      },
+      {
+       "id": "154200-F2",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.113
+       }
+      },
+      {
+       "id": "154200-o1",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.027
+       }
+      },
+      {
+       "id": "154200-o2",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.039
+       }
+      },
+      {
+       "id": "154200-o3",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.033
+       }
+      },
+      {
+       "id": "154200-o4",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.003
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.0,
+     "n_defects": 0,
+     "astm_points_raw": 0,
+     "map_background_p999": {
+      "stain": 0.345
+     }
+    }
+   }
+  },
+  "export_20260923_154231_raw.png": {
+   "scope": "roll",
+   "modes": {
+    "ensemble": {
+     "gt": [
+      {
+       "id": "154231-F1",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 0.551,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.047,
+        "crease": 0.778,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154231-F2",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 0.954,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.119,
+        "crease": 1.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154231-F3",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.073,
+        "crease": 0.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154231-F4",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.03,
+        "crease": 0.113,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154231-F5",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.351,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S2 extraction",
+       "map_peak": {
+        "chromatic": 0.016,
+        "crease": 0.978,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154231-o1",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.258,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S2 extraction",
+       "map_peak": {
+        "chromatic": 0.0,
+        "crease": 0.842,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154231-o2",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.064,
+        "crease": 0.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154231-o3",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.027,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.05,
+        "crease": 0.0,
+        "contrast": 0.0
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.677,
+     "n_defects": 3,
+     "astm_points_raw": 10,
+     "map_background_p999": {
+      "chromatic": 0.392,
+      "crease": 1.0,
+      "contrast": 0.0
+     }
+    },
+    "crease": {
+     "gt": [
+      {
+       "id": "154231-F1",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 0.702,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 0.778
+       }
+      },
+      {
+       "id": "154231-F2",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 0.989,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 1.0
+       }
+      },
+      {
+       "id": "154231-F3",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.007,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.0
+       }
+      },
+      {
+       "id": "154231-F4",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.219,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.113
+       }
+      },
+      {
+       "id": "154231-F5",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.374,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S2 extraction",
+       "map_peak": {
+        "crease": 0.978
+       }
+      },
+      {
+       "id": "154231-o1",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.274,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S2 extraction",
+       "map_peak": {
+        "crease": 0.842
+       }
+      },
+      {
+       "id": "154231-o2",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.0
+       }
+      },
+      {
+       "id": "154231-o3",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.027,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.0
+       }
+      }
+     ],
+     "false_alarms": [
+      {
+       "category": "Crease",
+       "bbox": [
+        686,
+        2342,
+        10,
+        87
+       ],
+       "length_in": 0.86,
+       "points": 1,
+       "source": ""
+      }
+     ],
+     "sprawl_share": 0.677,
+     "n_defects": 5,
+     "astm_points_raw": 13,
+     "map_background_p999": {
+      "crease": 1.0
+     }
+    },
+    "stain": {
+     "gt": [
+      {
+       "id": "154231-F1",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.047
+       }
+      },
+      {
+       "id": "154231-F2",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.119
+       }
+      },
+      {
+       "id": "154231-F3",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.073
+       }
+      },
+      {
+       "id": "154231-F4",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.03
+       }
+      },
+      {
+       "id": "154231-F5",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.016
+       }
+      },
+      {
+       "id": "154231-o1",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.0
+       }
+      },
+      {
+       "id": "154231-o2",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.064
+       }
+      },
+      {
+       "id": "154231-o3",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.05
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.0,
+     "n_defects": 1,
+     "astm_points_raw": 4,
+     "map_background_p999": {
+      "stain": 0.392
+     }
+    }
+   }
+  },
+  "export_20260923_154250_raw.png": {
+   "scope": "roll",
+   "modes": {
+    "ensemble": {
+     "gt": [
+      {
+       "id": "154250-F1",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 0.551,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.045,
+        "crease": 0.767,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154250-F2",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 0.852,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.118,
+        "crease": 1.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154250-F3",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.07,
+        "crease": 0.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154250-F4",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.03,
+        "crease": 0.091,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154250-F5",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.345,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S2 extraction",
+       "map_peak": {
+        "chromatic": 0.02,
+        "crease": 0.971,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154250-S1",
+       "type": "spot",
+       "required": true,
+       "found": true,
+       "coverage": 0.721,
+       "category": "Stain",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 1.0,
+        "crease": 0.173,
+        "contrast": 0.56
+       }
+      },
+      {
+       "id": "154250-o1",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.25,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S2 extraction",
+       "map_peak": {
+        "chromatic": 0.0,
+        "crease": 0.838,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154250-o2",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.064,
+        "crease": 0.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154250-o3",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.049,
+        "crease": 0.0,
+        "contrast": 0.0
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.677,
+     "n_defects": 4,
+     "astm_points_raw": 11,
+     "map_background_p999": {
+      "chromatic": 0.389,
+      "crease": 1.0,
+      "contrast": 0.0
+     }
+    },
+    "crease": {
+     "gt": [
+      {
+       "id": "154250-F1",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 0.702,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 0.767
+       }
+      },
+      {
+       "id": "154250-F2",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 0.976,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 1.0
+       }
+      },
+      {
+       "id": "154250-F3",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.007,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.0
+       }
+      },
+      {
+       "id": "154250-F4",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.189,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.091
+       }
+      },
+      {
+       "id": "154250-F5",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.368,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S2 extraction",
+       "map_peak": {
+        "crease": 0.971
+       }
+      },
+      {
+       "id": "154250-S1",
+       "type": "spot",
+       "required": true,
+       "found": true,
+       "coverage": 0.143,
+       "category": "Stain",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 0.173
+       }
+      },
+      {
+       "id": "154250-o1",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.274,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S2 extraction",
+       "map_peak": {
+        "crease": 0.838
+       }
+      },
+      {
+       "id": "154250-o2",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.0
+       }
+      },
+      {
+       "id": "154250-o3",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.027,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.0
+       }
+      }
+     ],
+     "false_alarms": [
+      {
+       "category": "Crease",
+       "bbox": [
+        992,
+        1414,
+        178,
+        50
+       ],
+       "length_in": 1.83,
+       "points": 1,
+       "source": ""
+      },
+      {
+       "category": "Crease",
+       "bbox": [
+        685,
+        2318,
+        11,
+        111
+       ],
+       "length_in": 1.1,
+       "points": 1,
+       "source": ""
+      }
+     ],
+     "sprawl_share": 0.685,
+     "n_defects": 7,
+     "astm_points_raw": 15,
+     "map_background_p999": {
+      "crease": 1.0
+     }
+    },
+    "stain": {
+     "gt": [
+      {
+       "id": "154250-F1",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.045
+       }
+      },
+      {
+       "id": "154250-F2",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.118
+       }
+      },
+      {
+       "id": "154250-F3",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.07
+       }
+      },
+      {
+       "id": "154250-F4",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.03
+       }
+      },
+      {
+       "id": "154250-F5",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.02
+       }
+      },
+      {
+       "id": "154250-S1",
+       "type": "spot",
+       "required": true,
+       "found": true,
+       "coverage": 0.323,
+       "category": "Stain",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "stain": 1.0
+       }
+      },
+      {
+       "id": "154250-o1",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.0
+       }
+      },
+      {
+       "id": "154250-o2",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.064
+       }
+      },
+      {
+       "id": "154250-o3",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.049
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.02,
+     "n_defects": 2,
+     "astm_points_raw": 5,
+     "map_background_p999": {
+      "stain": 0.389
+     }
+    }
+   }
+  },
+  "export_20260923_154325_raw.png": {
+   "scope": "roll",
+   "modes": {
+    "ensemble": {
+     "gt": [
+      {
+       "id": "154325-F1",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 0.696,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.039,
+        "crease": 0.567,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154325-F2",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.097,
+        "crease": 0.948,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154325-F3",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.032,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.052,
+        "crease": 0.006,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154325-M1",
+       "type": "mark",
+       "required": true,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S3 class",
+       "map_peak": {
+        "chromatic": 0.876,
+        "crease": 1.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154325-M2",
+       "type": "mark",
+       "required": true,
+       "found": true,
+       "coverage": 0.92,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S3 class",
+       "map_peak": {
+        "chromatic": 0.979,
+        "crease": 1.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154325-o1",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.044,
+        "crease": 0.006,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154325-o2",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.467,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S2 extraction",
+       "map_peak": {
+        "chromatic": 0.045,
+        "crease": 0.853,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154325-o3",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.014,
+        "crease": 0.003,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154325-o4",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "chromatic": 0.025,
+        "crease": 0.0,
+        "contrast": 0.0
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.446,
+     "n_defects": 4,
+     "astm_points_raw": 12,
+     "map_background_p999": {
+      "chromatic": 0.245,
+      "crease": 1.0,
+      "contrast": 0.0
+     }
+    },
+    "crease": {
+     "gt": [
+      {
+       "id": "154325-F1",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 0.988,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 0.567
+       }
+      },
+      {
+       "id": "154325-F2",
+       "type": "fold",
+       "required": true,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 0.948
+       }
+      },
+      {
+       "id": "154325-F3",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.039,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.006
+       }
+      },
+      {
+       "id": "154325-M1",
+       "type": "mark",
+       "required": true,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S3 class",
+       "map_peak": {
+        "crease": 1.0
+       }
+      },
+      {
+       "id": "154325-M2",
+       "type": "mark",
+       "required": true,
+       "found": true,
+       "coverage": 0.92,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S3 class",
+       "map_peak": {
+        "crease": 1.0
+       }
+      },
+      {
+       "id": "154325-o1",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.006
+       }
+      },
+      {
+       "id": "154325-o2",
+       "type": "fold",
+       "required": false,
+       "found": true,
+       "coverage": 0.537,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 0.853
+       }
+      },
+      {
+       "id": "154325-o3",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.003
+       }
+      },
+      {
+       "id": "154325-o4",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.085,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "crease": 0.0
+       }
+      }
+     ],
+     "false_alarms": [
+      {
+       "category": "Crease",
+       "bbox": [
+        100,
+        1616,
+        48,
+        228
+       ],
+       "length_in": 2.32,
+       "points": 1,
+       "source": ""
+      }
+     ],
+     "sprawl_share": 0.437,
+     "n_defects": 4,
+     "astm_points_raw": 13,
+     "map_background_p999": {
+      "crease": 1.0
+     }
+    },
+    "stain": {
+     "gt": [
+      {
+       "id": "154325-F1",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.039
+       }
+      },
+      {
+       "id": "154325-F2",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.097
+       }
+      },
+      {
+       "id": "154325-F3",
+       "type": "fold",
+       "required": true,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.052
+       }
+      },
+      {
+       "id": "154325-M1",
+       "type": "mark",
+       "required": true,
+       "found": true,
+       "coverage": 1.0,
+       "category": "ChalkMark",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "stain": 0.876
+       }
+      },
+      {
+       "id": "154325-M2",
+       "type": "mark",
+       "required": true,
+       "found": true,
+       "coverage": 0.92,
+       "category": "ChalkMark",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "stain": 0.979
+       }
+      },
+      {
+       "id": "154325-o1",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.044
+       }
+      },
+      {
+       "id": "154325-o2",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.045
+       }
+      },
+      {
+       "id": "154325-o3",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.014
+       }
+      },
+      {
+       "id": "154325-o4",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.025
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.026,
+     "n_defects": 3,
+     "astm_points_raw": 8,
+     "map_background_p999": {
+      "stain": 0.245
+     }
+    }
+   }
+  },
+  "export_20260923_154829_raw.png": {
+   "scope": "roll",
+   "modes": {
+    "ensemble": {
+     "gt": [
+      {
+       "id": "154829-S1",
+       "type": "stain",
+       "required": true,
+       "found": true,
+       "coverage": 0.51,
+       "category": "Stain",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.757,
+        "crease": 0.982,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154829-M1",
+       "type": "mark",
+       "required": true,
+       "found": true,
+       "coverage": 0.194,
+       "category": "ChalkMark",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.86,
+        "crease": 1.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154829-o1",
+       "type": "stain",
+       "required": false,
+       "found": true,
+       "coverage": 0.246,
+       "category": "Stain",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.55,
+        "crease": 0.194,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154829-o2",
+       "type": "fold",
+       "required": false,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.001,
+        "crease": 0.603,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154829-o3",
+       "type": "fold",
+       "required": false,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.409,
+        "crease": 1.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154829-o4",
+       "type": "spot",
+       "required": false,
+       "found": true,
+       "coverage": 0.08,
+       "category": "Weave",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.215,
+        "crease": 0.34,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154829-o5",
+       "type": "spot",
+       "required": false,
+       "found": true,
+       "coverage": 0.091,
+       "category": "ChalkMark",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.221,
+        "crease": 0.16,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "154829-o6",
+       "type": "mark",
+       "required": false,
+       "found": true,
+       "coverage": 0.032,
+       "category": "ChalkMark",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "chromatic": 0.06,
+        "crease": 0.93,
+        "contrast": 0.0
+       }
+      }
+     ],
+     "false_alarms": [
+      {
+       "category": "ChalkMark",
+       "bbox": [
+        1572,
+        1384,
+        28,
+        55
+       ],
+       "length_in": 0.59,
+       "points": 1,
+       "source": "crease"
+      }
+     ],
+     "sprawl_share": 0.02,
+     "n_defects": 12,
+     "astm_points_raw": 16,
+     "map_background_p999": {
+      "chromatic": 0.313,
+      "crease": 1.0,
+      "contrast": 0.0
+     }
+    },
+    "crease": {
+     "gt": [
+      {
+       "id": "154829-S1",
+       "type": "stain",
+       "required": true,
+       "found": true,
+       "coverage": 0.95,
+       "category": "Weave",
+       "correct": false,
+       "fail_stage": "S3 class",
+       "map_peak": {
+        "crease": 0.982
+       }
+      },
+      {
+       "id": "154829-M1",
+       "type": "mark",
+       "required": true,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Weave",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 1.0
+       }
+      },
+      {
+       "id": "154829-o1",
+       "type": "stain",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": "Weave",
+       "correct": false,
+       "fail_stage": "S2 extraction",
+       "map_peak": {
+        "crease": 0.194
+       }
+      },
+      {
+       "id": "154829-o2",
+       "type": "fold",
+       "required": false,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Weave",
+       "correct": false,
+       "fail_stage": "S3 class",
+       "map_peak": {
+        "crease": 0.603
+       }
+      },
+      {
+       "id": "154829-o3",
+       "type": "fold",
+       "required": false,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Weave",
+       "correct": false,
+       "fail_stage": "S3 class",
+       "map_peak": {
+        "crease": 1.0
+       }
+      },
+      {
+       "id": "154829-o4",
+       "type": "spot",
+       "required": false,
+       "found": true,
+       "coverage": 0.727,
+       "category": "Weave",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 0.34
+       }
+      },
+      {
+       "id": "154829-o5",
+       "type": "spot",
+       "required": false,
+       "found": true,
+       "coverage": 0.203,
+       "category": "Weave",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 0.16
+       }
+      },
+      {
+       "id": "154829-o6",
+       "type": "mark",
+       "required": false,
+       "found": true,
+       "coverage": 0.678,
+       "category": "Weave",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "crease": 0.93
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.452,
+     "n_defects": 6,
+     "astm_points_raw": 10,
+     "map_background_p999": {
+      "crease": 1.0
+     }
+    },
+    "stain": {
+     "gt": [
+      {
+       "id": "154829-S1",
+       "type": "stain",
+       "required": true,
+       "found": true,
+       "coverage": 0.42,
+       "category": "Stain",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "stain": 0.757
+       }
+      },
+      {
+       "id": "154829-M1",
+       "type": "mark",
+       "required": true,
+       "found": true,
+       "coverage": 0.182,
+       "category": "ChalkMark",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "stain": 0.86
+       }
+      },
+      {
+       "id": "154829-o1",
+       "type": "stain",
+       "required": false,
+       "found": true,
+       "coverage": 0.233,
+       "category": "Stain",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "stain": 0.55
+       }
+      },
+      {
+       "id": "154829-o2",
+       "type": "fold",
+       "required": false,
+       "found": false,
+       "coverage": 0.0,
+       "category": null,
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.001
+       }
+      },
+      {
+       "id": "154829-o3",
+       "type": "fold",
+       "required": false,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Crease",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "stain": 0.409
+       }
+      },
+      {
+       "id": "154829-o4",
+       "type": "spot",
+       "required": false,
+       "found": true,
+       "coverage": 0.071,
+       "category": "Weave",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "stain": 0.215
+       }
+      },
+      {
+       "id": "154829-o5",
+       "type": "spot",
+       "required": false,
+       "found": true,
+       "coverage": 0.076,
+       "category": "ChalkMark",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "stain": 0.221
+       }
+      },
+      {
+       "id": "154829-o6",
+       "type": "mark",
+       "required": false,
+       "found": true,
+       "coverage": 0.03,
+       "category": "ChalkMark",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "stain": 0.06
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.0,
+     "n_defects": 10,
+     "astm_points_raw": 13,
+     "map_background_p999": {
+      "stain": 0.313
+     }
+    }
+   }
+  },
+  "export_20260923_155041_raw.png": {
+   "scope": "cut_panel",
+   "modes": {
+    "ensemble": {
+     "gt": [
+      {
+       "id": "155041-o1",
+       "type": "mark",
+       "required": false,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S3 class",
+       "map_peak": {
+        "chromatic": 0.867,
+        "crease": 1.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "155041-o2",
+       "type": "mark",
+       "required": false,
+       "found": false,
+       "coverage": 0.06,
+       "category": "ChalkMark",
+       "correct": false,
+       "fail_stage": "S2 extraction",
+       "map_peak": {
+        "chromatic": 0.097,
+        "crease": 1.0,
+        "contrast": 0.0
+       }
+      },
+      {
+       "id": "155041-o3",
+       "type": "spot",
+       "required": false,
+       "found": true,
+       "coverage": 0.436,
+       "category": "Hole",
+       "correct": false,
+       "fail_stage": "S3 class",
+       "map_peak": {
+        "chromatic": 1.0,
+        "crease": 1.0,
+        "contrast": 1.0
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.62,
+     "n_defects": 4,
+     "astm_points_raw": 12,
+     "map_background_p999": {
+      "chromatic": 1.0,
+      "crease": 1.0,
+      "contrast": 0.0
+     }
+    },
+    "crease": {
+     "gt": [
+      {
+       "id": "155041-o1",
+       "type": "mark",
+       "required": false,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S3 class",
+       "map_peak": {
+        "crease": 1.0
+       }
+      },
+      {
+       "id": "155041-o2",
+       "type": "mark",
+       "required": false,
+       "found": true,
+       "coverage": 1.0,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S3 class",
+       "map_peak": {
+        "crease": 1.0
+       }
+      },
+      {
+       "id": "155041-o3",
+       "type": "spot",
+       "required": false,
+       "found": true,
+       "coverage": 0.814,
+       "category": "Crease",
+       "correct": false,
+       "fail_stage": "S3 class",
+       "map_peak": {
+        "crease": 1.0
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.597,
+     "n_defects": 2,
+     "astm_points_raw": 8,
+     "map_background_p999": {
+      "crease": 1.0
+     }
+    },
+    "stain": {
+     "gt": [
+      {
+       "id": "155041-o1",
+       "type": "mark",
+       "required": false,
+       "found": true,
+       "coverage": 0.667,
+       "category": "ChalkMark",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "stain": 0.867
+       }
+      },
+      {
+       "id": "155041-o2",
+       "type": "mark",
+       "required": false,
+       "found": false,
+       "coverage": 0.056,
+       "category": "ChalkMark",
+       "correct": false,
+       "fail_stage": "S1 map",
+       "map_peak": {
+        "stain": 0.097
+       }
+      },
+      {
+       "id": "155041-o3",
+       "type": "spot",
+       "required": false,
+       "found": true,
+       "coverage": 0.689,
+       "category": "Weave",
+       "correct": true,
+       "fail_stage": "ok",
+       "map_peak": {
+        "stain": 1.0
+       }
+      }
+     ],
+     "false_alarms": [],
+     "sprawl_share": 0.373,
+     "n_defects": 4,
+     "astm_points_raw": 13,
+     "map_background_p999": {
+      "stain": 1.0
+     }
+    }
+   }
+  }
+ }
+}

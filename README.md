@@ -17,7 +17,27 @@ _Qiyu Chen, Huiyuan Luo, Haiming Yao, Wei Luo, Zhen Qu, Chengkan Lv*, Zhengtao Z
 [IEEE DOI Link](https://ieeexplore.ieee.org/document/11040032) &
 [ArXiv Preprint Link](https://arxiv.org/abs/2505.17551)
 
+## 🧵 Fabric Defect AOI & Cognitive Vision-LLM Inspection System
+> **Dự Án:** Hệ thống Giám sát & Phân tích Chất lượng Cuộn Vải 2 Tầng (AOI Deterministic + Multimodal Vision-LLM).  
+> **Tiêu Chuẩn Quốc Tế:** ASTM D5430 (4-Point Fabric Inspection).  
+> **Hồ Sơ Kỹ Thuật & Tài Liệu Thi Công Chi Tiết (8 Chương):** 👉 [docs/TAI_LIEU_THI_CONG_HE_THONG_AOI_VLM.md](docs/TAI_LIEU_THI_CONG_HE_THONG_AOI_VLM.md)
+
+### 🚀 Khởi Chạy Nhanh Giao Diện Giám Sát (HMI Web App)
+```bash
+# Kích hoạt môi trường và khởi chạy giao diện kiểm định
+streamlit run app.py --server.port 8501
+```
+*Truy cập trực tiếp tại:* `http://localhost:8501`
+
+### 📚 Tài Liệu Kỹ Thuật Đính Kèm:
+- 📑 **[Hồ Sơ Thi Công & Vận Hành Toàn Diện](docs/TAI_LIEU_THI_CONG_HE_THONG_AOI_VLM.md):** Bản đặc tả kỹ thuật, quang học trường tối 15°, thuật toán 2 tầng, bộ tự học Coreset chống nhiễm độc, SOP nhà máy và chuẩn API MES/PLC.
+- 🔄 **[Sơ Đồ Luồng Xử Lý Trực Quan (Interactive HTML)](docs/pipeline_flow.html):** Bản vẽ tương tác 6 bước xử lý thời gian thực.
+- 💡 **[Hướng Dẫn Kiến Trúc & Phần Cứng Quang Học](docs/fabric_defect_architecture_and_hardware_guide.md):** Phân tích cơ chế Photometric Stereo và Dark-Field Grazing Light.
+
+---
+
 ## Table of Contents
+* [🧵 Fabric Defect AOI & Vision-LLM System](#-fabric-defect-aoi--cognitive-vision-llm-inspection-system)
 * [📖 Introduction](#introduction)
 * [🔧 Environments](#environments)
 * [📊 Data Preparation](#data-preparation)
