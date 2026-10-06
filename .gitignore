@@ -3,7 +3,8 @@ __pycache__/
 *.pyc
 results/eval/
 results/training/
-results/models/
+# results/models/
+results/models/**/tb/
 results/inference/
 datasets/
 test_crop.png
