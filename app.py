@@ -978,7 +978,11 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
 
     # Sample images library
     sample_images = {}
-    test_folder = r"d:\Luan.Nguyen\Tools\fabric_defect\test"
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    local_test_folder = os.path.join(base_dir, "test_samples")
+    fallback_test_folder = r"d:\Luan.Nguyen\Tools\fabric_defect\test"
+    test_folder = local_test_folder if os.path.isdir(local_test_folder) else fallback_test_folder
+
     if os.path.isdir(test_folder):
         cam_tests = {
             "export_20260923_154200_raw.png": "📸 Camera 1: Vải đen - Nếp gấp chữ T dọc & ngang",
@@ -993,9 +997,13 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
             if os.path.exists(full_p):
                 sample_images[label] = full_p
 
-    user_sample_path = "results/inference/user_fabric_sample.jpg"
-    if os.path.exists(user_sample_path):
-        sample_images["Mẫu vải trắng có vết ố (Ảnh ban đầu)"] = user_sample_path
+    for p in [
+        os.path.join(test_folder, "user_fabric_sample.jpg"),
+        os.path.join(base_dir, "results", "inference", "user_fabric_sample.jpg"),
+    ]:
+        if os.path.exists(p):
+            sample_images["Mẫu vải trắng có vết ố (Ảnh ban đầu)"] = p
+            break
 
     st.sidebar.markdown("<p style='font-size: 0.8rem; font-weight: 700; color: #64748b;'>NGUỒN HÌNH ẢNH</p>", unsafe_allow_html=True)
     upload_choice = st.sidebar.selectbox(

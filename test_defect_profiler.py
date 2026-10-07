@@ -21,8 +21,13 @@ def run_test():
 
     print("=== STARTING DEFECT PROFILER & VLM INSPECTOR VERIFICATION ===")
 
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    local_test_folder = os.path.join(base_dir, "test_samples")
+    fallback_test_folder = r"d:\Luan.Nguyen\Tools\fabric_defect\test"
+    test_folder = local_test_folder if os.path.isdir(local_test_folder) else fallback_test_folder
+
     for filename, expected_cat in test_cases:
-        filepath = os.path.join(r"d:\Luan.Nguyen\Tools\fabric_defect\test", filename)
+        filepath = os.path.join(test_folder, filename)
         assert os.path.exists(filepath), f"File {filepath} not found!"
 
         img = Image.open(filepath).convert("RGB")
