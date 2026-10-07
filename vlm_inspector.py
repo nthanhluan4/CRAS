@@ -1,19 +1,16 @@
 """
 vlm_inspector.py
-Cognitive Vision-LLM (VLM) Inspector & Root-Cause QA/QC Reporting Engine
+Cognitive Quality Inspector & Root-Cause QA/QC Reporting Engine
 Stage 2: Semantic Reasoning & Textile Engineering Diagnostics
-Supports Google Gemini Vision (Flash, Flash-Lite) and Built-in Expert Engine
+Runs fully offline using the built-in expert engine.
 """
 
-import base64
 from datetime import datetime
-import io
 import json
 import os
 from typing import List, Dict, Any, Optional
 import pandas as pd
 from PIL import Image
-import requests
 
 
 def generate_vlm_inspection_report(
@@ -26,154 +23,14 @@ def generate_vlm_inspection_report(
 ) -> Dict[str, Any]:
     """
     Generates a formal textile engineering QA/QC report with Root-Cause Analysis,
-    ASTM D5430 compliance assessment, and machine maintenance recommendations.
-    
-    If api_key is provided and pil_image is passed, calls Google Gemini Multimodal VLM.
-    Otherwise, gracefully falls back to the deterministic Built-in Textile Expert Engine.
+    ASTM D5430 compliance assessment, and maintenance recommendations.
+
+    The app deliberately runs in 100% offline mode; external AI keys are ignored
+    to keep industrial operations stable and private.
     """
+    _ = api_key, gemini_model, pil_image
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    # If API key is provided and image is present, attempt live Gemini VLM call
-    if api_key and api_key.strip() and pil_image is not None:
-        try:
-            report = _call_gemini_vlm(
-                pil_image=pil_image,
-                defects=defects,
-                stats=stats,
-                sample_name=sample_name,
-                api_key=api_key.strip(),
-                model_name=gemini_model.strip(),
-                timestamp=timestamp,
-            )
-            return report
-        except Exception as e:
-            # Fall back to built-in expert engine with error notification
-            report = _run_built_in_expert_reasoning(defects, stats, sample_name, timestamp)
-            report["vlm_api_error"] = str(e)
-            report["ai_engine"] = f"Bộ Suy Luận Chuyên Gia Nội Bộ (Dự phòng do lỗi kết nối Gemini: {str(e)[:60]}...)"
-            return report
-
-    # Default: Built-in Textile Engineering Expert Engine
     return _run_built_in_expert_reasoning(defects, stats, sample_name, timestamp)
-
-
-def _call_gemini_vlm(
-    pil_image: Image.Image,
-    defects: List[Dict[str, Any]],
-    stats: Dict[str, Any],
-    sample_name: str,
-    api_key: str,
-    model_name: str,
-    timestamp: str,
-) -> Dict[str, Any]:
-    """
-    Calls Google Gemini Vision REST API with the fabric image and AOI defect profile.
-    """
-    # 1. Resize image to optimal dimension for fast network upload (< 1024px)
-    w, h = pil_image.size
-    max_dim = 1024
-    scale = min(max_dim / max(w, h), 1.0)
-    resized_img = pil_image.resize((int(w * scale), int(h * scale)), Image.Resampling.LANCZOS)
-
-    buffer = io.BytesIO()
-    resized_img.save(buffer, format="JPEG", quality=85)
-    img_b64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
-
-    # 2. Defect summary for prompt
-    defect_summary = []
-    for d in defects[:12]:
-        defect_summary.append({
-            "id": d["id"],
-            "category": d["category"],
-            "sub_type": d["sub_type"],
-            "bbox": d["bbox"],
-            "length_px": d["length_px"],
-            "area_px": d["area_px"],
-            "astm_points": d["astm_points"],
-            "severity": d["severity"],
-        })
-
-    prompt = f"""Bạn là Kỹ sư Trưởng Giám sát Chất lượng Dệt may Quốc tế (Lead Textile Quality Control Engineer).
-Dưới đây là ảnh chụp bề mặt vải thực tế từ camera công nghiệp kèm kết quả trích xuất khuyết tật từ thuật toán thị giác AOI.
-
-THỐNG KÊ THUẬT TOÁN AOI ĐÃ ĐO ĐƯỢC:
-- Mẫu kiểm tra: {sample_name}
-- Tổng số khuyết tật: {stats['total_defects']}
-- Tổng điểm phạt chuẩn quốc tế ASTM D5430 (4-Point System): {stats['total_astm_points']}
-- Phân bố lỗi: {json.dumps(stats['type_counts'], ensure_ascii=False)}
-- Chi tiết các khuyết tật tiêu biểu:
-{json.dumps(defect_summary, indent=2, ensure_ascii=False)}
-
-YÊU CẦU:
-Hãy quan sát kỹ bức ảnh bề mặt vải và đối chiếu với danh sách khuyết tật trên để đưa ra báo cáo kiểm định chất lượng dệt may.
-Trả về KẾT QUẢ DUY NHẤT LÀ MỘT ĐỐI TƯỢNG JSON (không kèm markdown ngoài json) theo đúng cấu trúc sau:
-{{
-  "executive_summary": "Tóm tắt ngắn gọn tình trạng chất lượng vải và mức độ nghiêm trọng",
-  "roll_grade": "HẠNG A (XUẤT KHẨU) / HẠNG B (THƯƠNG MẠI CÓ ĐIỀU KIỆN) / HẠNG C / REJECT (PHẾ PHẨM)",
-  "acceptance_status": "ĐẠT CHUẨN (PASSED) / CẦN XỬ LÝ NHIỆT / KHÔNG ĐẠT (REJECTED)",
-  "diagnostics": [
-    {{
-      "category": "Tên nhóm lỗi (Crease / Stain / Hole / Weave)",
-      "diagnosis": "Phân tích nguyên nhân kỹ thuật gốc rễ (mất đồng bộ rulo cán, lực căng sợi dọc không đều, rò rỉ dầu nhớt từ bạc đạn...)",
-      "action": "Hướng dẫn căn chỉnh, sửa chữa hoặc bảo trì máy dệt cụ thể cho thợ vận hành"
-    }}
-  ],
-  "corrective_actions": [
-    "Hành động 1...",
-    "Hành động 2..."
-  ]
-}}
-"""
-
-    endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
-    payload = {
-        "contents": [
-            {
-                "parts": [
-                    {"text": prompt},
-                    {
-                        "inline_data": {
-                            "mime_type": "image/jpeg",
-                            "data": img_b64
-                        }
-                    }
-                ]
-            }
-        ],
-        "generationConfig": {
-            "temperature": 0.2,
-            "response_mime_type": "application/json"
-        }
-    }
-
-    headers = {"Content-Type": "application/json"}
-    resp = requests.post(endpoint, json=payload, headers=headers, timeout=25)
-    resp.raise_for_status()
-
-    data = resp.json()
-    content_text = data["candidates"][0]["content"]["parts"][0]["text"]
-    result_json = json.loads(content_text)
-
-    report = {
-        "report_id": f"QC-GEMINI-{datetime.now().strftime('%Y%m%d-%H%M%S')}",
-        "timestamp": timestamp,
-        "sample_name": sample_name,
-        "standard_applied": "ASTM D5430 (Standard Test Method for Visually Inspecting and Grading Fabrics)",
-        "ai_engine": f"Google Gemini VLM ({model_name}) - AI THẬT 100%",
-        "is_real_llm": True,
-        "executive_summary": result_json.get("executive_summary", "Đã phân tích bởi Google Gemini VLM."),
-        "roll_grade": result_json.get("roll_grade", stats["roll_grade"]),
-        "acceptance_status": result_json.get("acceptance_status", stats["acceptance_status"]),
-        "total_defects": stats["total_defects"],
-        "total_astm_points": stats["total_astm_points"],
-        "defect_area_percentage": f"{stats['defect_area_pct']}%",
-        "type_breakdown": stats["type_counts"],
-        "severity_breakdown": stats["severity_counts"],
-        "diagnostics": result_json.get("diagnostics", []),
-        "corrective_actions": result_json.get("corrective_actions", []),
-        "defects_detail": defects,
-    }
-    return report
 
 
 def _run_built_in_expert_reasoning(
@@ -249,7 +106,7 @@ def _run_built_in_expert_reasoning(
 
     if type_counts.get("Hole", 0) > 0 or type_counts.get("Weave", 0) > 0:
         diag_text = (
-            "Phát hiện khuyết tật dệt cấu trúc / rách thủng sợi vải. "
+            "Phát hiện khuyết điểm dệt cấu trúc / rách thủng sợi vải. "
             "Nguyên nhân do kim dệt bị gãy, kẹt sợi hoặc có dị vật cơ học sắc nhọn va quẹt trên đường dẫn vải."
         )
         action_text = (
@@ -261,13 +118,13 @@ def _run_built_in_expert_reasoning(
 
     if total_defects == 0:
         executive_summary = (
-            "Bề mặt vải đạt trạng thái lý tưởng. Không phát hiện bất kỳ khuyết tật hình học, "
+            "Bề mặt vải đạt trạng thái lý tưởng. Không phát hiện bất kỳ khuyết điểm hình học, "
             "nếp gấp cơ khí hay vết biến đổi sắc độ màu nào. Toàn bộ cấu trúc sợi đồng đều."
         )
     else:
         types_str = ", ".join([f"{count} {cat}" for cat, count in type_counts.items()])
         executive_summary = (
-            f"Phát hiện tổng cộng {total_defects} khuyết tật ({types_str}) "
+            f"Phát hiện tổng cộng {total_defects} khuyết điểm ({types_str}) "
             f"với tổng điểm phạt chất lượng ASTM D5430 là {total_points} điểm. "
             f"Kết luận kiểm định: {acceptance}. Phân hạng chất lượng: {roll_grade}."
         )
@@ -300,7 +157,7 @@ def export_defects_dataframe(defects: List[Dict[str, Any]]) -> pd.DataFrame:
     """
     if not defects:
         return pd.DataFrame(columns=[
-            "Mã Lỗi", "Loại Khuyết Tật", "Phân Loại Chi Tiết", "Tọa Độ BBox (X, Y, W, H)",
+            "Mã Lỗi", "Loại Khuyết Điểm", "Phân Loại Chi Tiết", "Tọa Độ BBox (X, Y, W, H)",
             "Chiều Dài (px)", "Diện Tích (px²)", "Tỉ Số L/W", "Điểm ASTM D5430", "Mức Độ"
         ])
 
@@ -309,7 +166,7 @@ def export_defects_dataframe(defects: List[Dict[str, Any]]) -> pd.DataFrame:
         bbox_str = f"[{d['bbox'][0]}, {d['bbox'][1]}, {d['bbox'][2]}, {d['bbox'][3]}]"
         rows.append({
             "Mã Lỗi": d["id"],
-            "Loại Khuyết Tật": d["type"],
+            "Loại Khuyết Điểm": d["type"],
             "Phân Loại Chi Tiết": d["sub_type"],
             "Tọa Độ BBox (X, Y, W, H)": bbox_str,
             "Chiều Dài (px)": int(d["length_px"]),

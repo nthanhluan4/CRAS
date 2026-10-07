@@ -53,7 +53,7 @@ import roll_session
 # 0. PAGE CONFIG & 100% MATCHED DESIGN SYSTEM
 # ==========================================
 st.set_page_config(
-    page_title="CRAS - Hệ Thống Giám Định Khuyết Tật Vải",
+    page_title="CRAS - Hệ Thống Giám Định Khuyết Điểm Vải",
     page_icon="🧵",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -893,14 +893,6 @@ def grade_short_label(grade_text: str) -> str:
         return "Reject"
     return "Chưa xếp hạng"
 
-if "gemini_api_key_store" not in st.session_state:
-    st.session_state["gemini_api_key_store"] = os.environ.get("GEMINI_API_KEY", "")
-if "gemini_model_store" not in st.session_state:
-    st.session_state["gemini_model_store"] = "gemini-2.0-flash-lite"
-if "mes_endpoint_store" not in st.session_state:
-    st.session_state["mes_endpoint_store"] = "http://mes.factory.internal/api/v1/quality/fabric-inspection"
-
-
 # ==========================================
 # 3. MAIN CONTROLLER & ROUTING
 # ==========================================
@@ -916,7 +908,7 @@ def main():
     app_section = st.sidebar.radio(
         "Chọn phân hệ làm việc:",
         [
-            "🔍 Giám Định & Nhận Diện Khuyết Tật (Demo)",
+            "🔍 Giám Định & Nhận Diện Khuyết Điểm (Demo)",
             "⚙️ Cấu Hình Nền Tảng & Huấn Luyện [🔒]"
         ],
         index=0
@@ -952,7 +944,7 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
     active_profile_str = learner.active_profile_name if learner.memory_bank is not None else "Khuôn mẫu vải chuẩn"
 
     # Main Page Title
-    st.html('<div class="st-page-title">Hệ Thống Giám Định & Nhận Diện Khuyết Tật Vải (AOI)</div>')
+    st.html('<div class="st-page-title">Hệ Thống Giám Định & Nhận Diện Khuyết Điểm Vải (AOI)</div>')
 
     # Sidebar parameters
     st.sidebar.markdown("<p style='font-size: 0.8rem; font-weight: 700; color: #64748b;'>THIẾT LẬP THUẬT TOÁN</p>", unsafe_allow_html=True)
@@ -961,11 +953,11 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
         "🎓 Khuôn Mẫu Vàng (Golden Memory Bank Few-Shot)",
         "📏 Bắt Nếp Gấp / Vết Nhăn (Hessian 2nd Deriv)",
         "🟡 Bắt Vết Ố Vàng / Dầu Mỡ (CIE Lab Shift)",
-        "🤖 AI Sâu CRAS (Deep Residual Synthesis)"
+        "🤖 Học Sâu CRAS (Deep Residual Synthesis)"
     ]
     selected_mode = st.sidebar.selectbox("Chế độ:", mode_options, index=0)
 
-    if "AI Sâu" in selected_mode:
+    if "Học Sâu" in selected_mode:
         threshold = st.sidebar.slider("Ngưỡng xác suất lỗi CRAS (Threshold)", 0.30, 0.99, 0.50, 0.01, format="%.2f")
     elif "Khuôn Mẫu Vàng" in selected_mode:
         threshold = st.sidebar.slider("Ngưỡng Mẫu Vàng (Threshold)", 0.20, 1.00, 0.50, 0.05, format="%.2f")
@@ -1078,7 +1070,7 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
         return
 
     cras_model, device = None, None
-    if "AI Sâu" in selected_mode:
+    if "Học Sâu" in selected_mode:
         model_dir = "results/models/backbone_0/itdd_cotton_fabric"
         if os.path.exists(model_dir):
             try:
@@ -1101,7 +1093,7 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
         score, heatmap_rgb, overlay, master_anomaly = detect_crease_defect(pil_img)
     elif "Vết Ố" in selected_mode:
         score, heatmap_rgb, overlay, master_anomaly = run_stain_enhancement(pil_img)
-    elif "AI Sâu" in selected_mode and cras_model is not None:
+    elif "Học Sâu" in selected_mode and cras_model is not None:
         score, heatmap_rgb, overlay, master_anomaly, ood_ratio = run_cras_inference(cras_model, device, pil_img)
         if ood_ratio > 0.30:
             st.warning(
@@ -1110,7 +1102,7 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
             )
         st.caption("Vùng phân tích CRAS: khung trắng ở giữa ảnh (Resize 329 + CenterCrop 288, giống lúc huấn luyện).")
     else:
-        if "AI Sâu" in selected_mode:
+        if "Học Sâu" in selected_mode:
             st.warning("Không nạp được mô hình CRAS — đang dùng chế độ Hỗn Hợp thay thế.")
         score, heatmap_rgb, overlay, details, master_anomaly = run_hybrid_ensemble(
             pil_img, golden=learner if golden_active else None, decision_level=threshold)
@@ -1205,7 +1197,7 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
             <div class="st-stat-left">
                 <div class="st-stat-icon-box st-icon-lavender">🔍</div>
                 <div>
-                    <div class="st-stat-title">Số Lượng Khuyết Tật</div>
+                    <div class="st-stat-title">Số Lượng Khuyết Điểm</div>
                     <div class="st-stat-num">{len(defects)} <span style="font-size: 0.82rem; font-weight: 500; color: #64748b;">vết lỗi</span></div>
                 </div>
             </div>
@@ -1298,7 +1290,7 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
         st.html(f"""
         <div class="st-view-card">
             <div class="st-view-header">
-                <span>📐 4. Định Vị Khuyết Tật ASTM</span>
+                <span>📐 4. Định Vị Khuyết Điểm ASTM</span>
                 <span class="st-view-tag" style="background: #e0f2fe; color: #0284c7;">{grade_short}</span>
             </div>
         </div>
@@ -1338,7 +1330,7 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
 
     # ── DEEP ANALYSIS TABS ──
     tab_list, tab_pareto, tab_vlm, tab_pipe, tab_export = st.tabs([
-        "📋 Danh Sách Khuyết Tật",
+        "📋 Danh Sách Khuyết Điểm",
         "📊 Phân Tích Pareto",
         "🧠 Báo Cáo Kỹ Sư VLM",
         "🔄 Luồng Xử Lý 6 Bước",
@@ -1348,18 +1340,18 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
     df_defects = pd.DataFrame(defects)
 
     with tab_list:
-        st.markdown(f"#### 📋 Chi tiết các khuyết tật định vị ({len(defects)} vết lỗi)")
+        st.markdown(f"#### 📋 Chi tiết các khuyết điểm định vị ({len(defects)} vết lỗi)")
         if not df_defects.empty:
             st.dataframe(df_defects, use_container_width=True, height=260)
         else:
-            st.success("✅ Mẫu vải hoàn toàn sạch, không có khuyết tật nào vượt qua ngưỡng quy định.")
+            st.success("✅ Mẫu vải hoàn toàn sạch, không có khuyết điểm nào vượt qua ngưỡng quy định.")
 
     with tab_pareto:
         col_p1, col_p2 = st.columns(2)
         with col_p1:
-            st.markdown("#### 📊 Phân bố theo chủng loại khuyết tật:")
+            st.markdown("#### 📊 Phân bố theo chủng loại khuyết điểm:")
             if stats.get("type_counts"):
-                type_df = pd.DataFrame(list(stats["type_counts"].items()), columns=["Chủng Loại Khuyết Tật", "Số Lượng"]).set_index("Chủng Loại Khuyết Tật")
+                type_df = pd.DataFrame(list(stats["type_counts"].items()), columns=["Chủng Loại Khuyết Điểm", "Số Lượng"]).set_index("Chủng Loại Khuyết Điểm")
                 st.bar_chart(type_df, color="#f95721")
             else:
                 st.info("Mẫu vải đạt chuẩn, không có lỗi để thống kê.")
@@ -1377,21 +1369,19 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
 
     with tab_vlm:
         st.markdown("#### 🧠 Báo Cáo Chẩn Đoán Căn Nguyên Cơ Khí & Tuân Thủ Tiêu Chuẩn")
-        api_key_to_use = st.session_state.get("gemini_api_key_store", "")
-        model_to_use = st.session_state.get("gemini_model_store", "gemini-2.0-flash-lite")
 
         report = vlm_inspector.generate_vlm_inspection_report(
             defects=defects,
             stats=stats,
             pil_image=pil_img,
             sample_name=sample_name,
-            api_key=api_key_to_use,
-            gemini_model=model_to_use
+            api_key="",
+            gemini_model=""
         )
 
         diag_list = report.get("diagnostics", [])
         diag_paragraphs = [f"• **{d.get('category', 'Lỗi')}**: {d.get('diagnosis', '')}" for d in diag_list]
-        root_cause_display = "\n\n".join(diag_paragraphs) if diag_paragraphs else report.get("executive_summary", "Không ghi nhận khuyết tật bất thường.")
+        root_cause_display = "\n\n".join(diag_paragraphs) if diag_paragraphs else report.get("executive_summary", "Không ghi nhận khuyết điểm bất thường.")
 
         action_list = report.get("corrective_actions", [])
         actions_display = "\n".join([f"{i+1}. {act}" for i, act in enumerate(action_list)]) if action_list else "Duy trì quy trình kiểm soát chất lượng cuộn vải hiện tại."
@@ -1431,7 +1421,7 @@ def render_demo_inspection_section(learner: golden_learner.GoldenMemoryLearner):
         with c_exp2:
             csv_bytes = df_defects.to_csv(index=False).encode('utf-8-sig')
             st.download_button(
-                label="📥 Tải Nhật Ký Khuyết Tật (CSV)",
+                label="📥 Tải Nhật Ký Khuyết Điểm (CSV)",
                 data=csv_bytes,
                 file_name=f"fabric_defects_log_{rep_id}.csv",
                 mime="text/csv",
@@ -1561,7 +1551,7 @@ def render_admin_section(learner: golden_learner.GoldenMemoryLearner):
         "🎓 Huấn Luyện Mẫu Chuẩn",
         "📦 Kho Hồ Sơ Khuôn Mẫu (.bank)",
         "🛠️ Tham Số Quang Học & Thuật Toán AOI",
-        "🤖 Cognitive VLM & Tích Hợp MES/PLC"
+        "� Chuyên Gia Nội Bộ"
     ])
 
     with admin_tab1:
@@ -1656,7 +1646,7 @@ def render_admin_section(learner: golden_learner.GoldenMemoryLearner):
                     min_value=20, max_value=2000,
                     value=int(cfg["min_area"]),
                     step=10,
-                    help="Các vùng khuyết tật có diện tích pixel nhỏ hơn giá trị này sẽ bị loại bỏ để tránh báo động giả do xơ vải bình thường."
+                    help="Các vùng khuyết điểm có diện tích pixel nhỏ hơn giá trị này sẽ bị loại bỏ để tránh báo động giả do xơ vải bình thường."
                 )
                 new_aspect_ratio = st.number_input(
                     "Tỷ lệ dạng nếp gấp linear (Aspect Ratio Threshold):",
@@ -1720,53 +1710,20 @@ def render_admin_section(learner: golden_learner.GoldenMemoryLearner):
                     st.success(f"✅ Đã lưu cấu hình vào `{aoi_config.CONFIG_PATH}` (giữ nguyên sau khi khởi động lại).")
 
     with admin_tab4:
-        st.markdown("#### 🤖 Cấu Hình Cognitive VLM & Kết Nối Công Nghiệp MES / PLC")
+        st.markdown("#### � Hệ Thống Chuyên Gia Nội Bộ (Offline / Không Cần Google hoặc ChatGPT)")
+        st.info("Tất cả kết luận kỹ thuật được suy luận bằng mô hình định tính nội bộ của CRAS, hoàn toàn không phụ thuộc vào Google Gemini, ChatGPT hay bất kỳ dịch vụ AI bên ngoài nào.")
 
-        with st.form("cloud_mes_form"):
-            st.markdown("**1. Cấu hình Trí Tuệ Nhân Tạo Google Gemini Vision:**")
-            new_api_key = st.text_input(
-                "Google Gemini API Key:",
-                value=st.session_state.get("gemini_api_key_store", ""),
-                type="password",
-                placeholder="Nhập API Key Gemini..."
-            )
-            model_options = [
-                "gemini-2.0-flash-lite",
-                "gemini-2.0-flash",
-                "gemini-1.5-flash",
-                "gemini-1.5-flash-8b",
-                "gemini-2.5-flash"
-            ]
-            cur_model = st.session_state.get("gemini_model_store", "gemini-2.0-flash-lite")
-            new_model = st.selectbox(
-                "Mô hình VLM triển khai:",
-                model_options,
-                index=model_options.index(cur_model) if cur_model in model_options else 0
-            )
+        st.markdown("**Tuân thủ vận hành nhà máy:**")
+        st.caption("• Phân tích nguyên nhân kỹ thuật theo ASTM D5430 và kiến thức dệt may thực tiễn")
+        st.caption("• Không cần API key, không cần gửi ảnh ra ngoài mạng")
+        st.caption("• Làm việc ổn định trong môi trường không internet hoặc môi trường sản xuất an ninh")
 
-            st.markdown("---")
-            st.markdown("**2. Cấu hình Kết Nối Máy Chủ Quản Lý Sản Xuất (MES Endpoint):**")
-            new_mes_endpoint = st.text_input(
-                "MES REST API URL Endpoint:",
-                value=st.session_state.get("mes_endpoint_store", "http://mes.factory.internal/api/v1/quality/fabric-inspection")
-            )
-
-            st.markdown("---")
-            st.markdown("**3. Bản Đồ Kênh Digital Output Điều Khiển PLC (24V DC):**")
-            plc_c1, plc_c2 = st.columns(2)
-            with plc_c1:
-                st.checkbox("DO_01: Van khí nén phun mực đánh dấu mép vải", value=True)
-                st.checkbox("DO_02: Còi hú & Đèn tháp cảnh báo Grade B", value=True)
-            with plc_c2:
-                st.checkbox("DO_03: Rơ-le dừng khẩn cấp (E-Stop) khi Reject cuộn", value=True)
-                st.checkbox("DI_01: Đồng bộ xung Rotary Encoder đo mét vải", value=True)
-
-            save_cloud_btn = st.form_submit_button("💾 Lưu Toàn Bộ Thiết Lập Kết Nối", use_container_width=True)
-            if save_cloud_btn:
-                st.session_state["gemini_api_key_store"] = new_api_key.strip()
-                st.session_state["gemini_model_store"] = new_model
-                st.session_state["mes_endpoint_store"] = new_mes_endpoint.strip()
-                st.success("✅ Đã cập nhật cấu hình Cognitive VLM & Tích hợp MES/PLC.")
+        with st.form("local_expert_form"):
+            local_confidence = st.slider("Mức độ tin cậy của báo cáo nội bộ", min_value=0.0, max_value=1.0, value=0.95, step=0.01)
+            save_local_btn = st.form_submit_button("💾 Áp Dụng Cấu Hình Chuyên Gia Nội Bộ", use_container_width=True)
+            if save_local_btn:
+                st.session_state["local_expert_confidence"] = float(local_confidence)
+                st.success("✅ Đã bật chế độ chuyên gia nội bộ 100% offline.")
 
 
 if __name__ == "__main__":
